@@ -178,7 +178,7 @@ def run_game(player, rnd=10, answer=None):
         return None
 
 
-def compete(players, game_num, rnd=10, base_score=20):
+def compete(players, game_num, rnd=10, base_score=10):
     answers = [random.sample(ALL_NUMBER, NUMBER_COUNT) for _ in range(game_num)]
     score_board = collections.defaultdict(int)
     for g in range(game_num):
@@ -208,6 +208,14 @@ def compete_with_ai(game_num=3):
 
 
 
+def test_avg_step(test_num=100):
+    ai = TreePlayer("AI", wait=0)
+    steps = []
+    for _ in range(test_num):
+        steps.append(run_game(ai, rnd=10))
+    avg = sum(steps)/ len(steps)
+    logger.info(f"{ai} avg cost{avg:.3f} steps with {test_num} tests")
+
 
 
 
@@ -223,4 +231,6 @@ if __name__ == '__main__':
     #
     # score_board = compete(players, 7)
     # logger.info(score_board)
+    # test_avg_step()
+
     fire.Fire(compete_with_ai)
